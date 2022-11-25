@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.airbnb.epoxy.stickyheader.StickyHeaderLinearLayoutManager
 import com.app.nestedrecyclerview.databinding.FragmentMailBinding
 import com.app.nestedrecyclerview.mail.UIController
 
@@ -36,6 +37,7 @@ class MailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.recyclerView.layoutManager = StickyHeaderLinearLayoutManager(requireContext())
         binding.recyclerView.setController(uiController)
         binding.recyclerView.requestModelBuild()
         uiController.updateSelectedTab(1)
