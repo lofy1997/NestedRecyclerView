@@ -11,7 +11,7 @@ import com.app.nestedrecyclerview.mail.UIController
 class MailFragment : Fragment() {
 
     private val uiController: UIController by lazy {
-        UIController()
+        UIController(fragmentActivity = requireActivity())
     }
     private var _binding: FragmentMailBinding? = null
     private val binding get() = _binding!!
