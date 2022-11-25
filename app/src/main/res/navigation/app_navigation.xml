@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/MailFragment"
-        android:name="com.app.nestedrecyclerview.HomeFragment"
+        android:name="com.app.nestedrecyclerview.mail.MailFragment"
         android:label="fragment_mail"
         tools:layout="@layout/fragment_mail" />
 

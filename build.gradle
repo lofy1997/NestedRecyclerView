@@ -4,9 +4,7 @@ buildscript {
     ext {
         kotlin_version = "1.7.10"
         nav_version = "2.5.3"
-        life_cycle_version = "2.3.1"
-        epoxy_version = "4.6.2"
-        room_version = "2.3.0"
+        epoxyVersion = "5.1.1"
     }
 }
 plugins {
