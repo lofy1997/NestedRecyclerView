@@ -1,5 +1,8 @@
 package com.app.nestedrecyclerview.mail
 
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.widget.ViewPager2
 import com.airbnb.epoxy.EpoxyController
 import com.airbnb.epoxy.carousel
 import com.airbnb.epoxy.group
@@ -10,8 +13,13 @@ import com.app.nestedrecyclerview.mail.WLTab.CREDIT
 import com.app.nestedrecyclerview.mail.header.CarouselItemModel_
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.Tab
+import com.app.nestedrecyclerview.mail.viewpager.WLPagerFragment
+import com.app.nestedrecyclerview.mail.viewpager.viewPager
 
-class UIController : EpoxyController(), StickyHeaderCallbacks {
+class UIController(
+    private val fragmentActivity: FragmentActivity
+) : EpoxyController(), StickyHeaderCallbacks {
+
 
     fun updateSelectedTab(position: Int) {
         lastSelectedTabPosition = position
@@ -61,7 +69,25 @@ class UIController : EpoxyController(), StickyHeaderCallbacks {
                 }
             })
         }
-        List(15) {
+        
+        val fragments: ArrayList<Fragment> = arrayListOf(WLPagerFragment(), WLPagerFragment())
+        viewPager {
+            id("view_pager")
+            fragments(fragments)
+            fragmentActivity(this@UIController.fragmentActivity)
+            selectedPosition(this@UIController.lastSelectedTabPosition)
+            onPageChangeListener(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageScrollStateChanged(state: Int) {
+                    super.onPageScrollStateChanged(state)
+                }
+
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                    super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                }
+
+            })
+        }
+        List(20) {
             textItem {
                 id("item_2_$it")
                 title("Hello item $it")
