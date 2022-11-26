@@ -1,12 +1,15 @@
 package com.app.nestedrecyclerview.mail
 
+import android.graphics.RenderEffect
+import android.graphics.Shader
+import android.os.Build.VERSION
+import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.app.nestedrecyclerview.databinding.FragmentMailBinding
-import com.app.nestedrecyclerview.mail.UIController
 
 class MailFragment : Fragment() {
 
@@ -36,6 +39,7 @@ class MailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.toolbar.background.alpha = (0.5 * 255).toInt()
         binding.recyclerView.setController(uiController)
         binding.recyclerView.requestModelBuild()
         uiController.updateSelectedTab(1)
