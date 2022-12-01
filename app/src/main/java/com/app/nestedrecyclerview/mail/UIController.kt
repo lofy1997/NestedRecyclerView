@@ -11,13 +11,14 @@ import com.app.nestedrecyclerview.R
 import com.app.nestedrecyclerview.mail.WLTab.ACCOUNT
 import com.app.nestedrecyclerview.mail.WLTab.CREDIT
 import com.app.nestedrecyclerview.mail.header.CarouselItemModel_
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayout.Tab
 import com.app.nestedrecyclerview.mail.viewpager.WLPagerFragment
 import com.app.nestedrecyclerview.mail.viewpager.viewPager
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.Tab
 
 class UIController(
-    private val fragmentActivity: FragmentActivity
+    private val fragmentActivity: FragmentActivity,
+    private val onTabSelectedListener: (Int) -> Unit,
 ) : EpoxyController(), StickyHeaderCallbacks {
 
 
@@ -26,8 +27,11 @@ class UIController(
         requestModelBuild()
     }
 
+    fun refresh() {
+        requestModelBuild()
+    }
     private var lastSelectedTabPosition: Int = 0
-
+    private val fragments: ArrayList<Fragment> = arrayListOf(WLPagerFragment(), WLPagerFragment())
     override fun isStickyHeader(position: Int): Boolean  = adapter.getModelAtPosition(position) is WLDetailsTabBarModel
 
     override fun buildModels() {
@@ -36,7 +40,7 @@ class UIController(
             CREDIT
         )
 
-        var carouselItems: ArrayList<CarouselItemModel_> = arrayListOf()
+        val carouselItems: ArrayList<CarouselItemModel_> = arrayListOf()
 
         List(10) {
             carouselItems.add(CarouselItemModel_().id("carousel_$it").title("Carousel title $it"))
@@ -58,8 +62,10 @@ class UIController(
             selectedPosition(this@UIController.lastSelectedTabPosition)
             onTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: Tab?) {
+                    this@UIController.refresh()
+                    println("tab ${tab?.position}")
                     this@UIController.lastSelectedTabPosition = tab?.position ?: 0
-                    this@UIController.requestModelBuild()
+                    this@UIController.onTabSelectedListener.invoke(tab?.position ?: 0)
                 }
 
                 override fun onTabUnselected(tab: Tab?) {
@@ -69,11 +75,10 @@ class UIController(
                 }
             })
         }
-        
-        val fragments: ArrayList<Fragment> = arrayListOf(WLPagerFragment(), WLPagerFragment())
+
         viewPager {
             id("view_pager")
-            fragments(fragments)
+            fragments(this@UIController.fragments)
             fragmentActivity(this@UIController.fragmentActivity)
             selectedPosition(this@UIController.lastSelectedTabPosition)
             onPageChangeListener(object : ViewPager2.OnPageChangeCallback() {
@@ -85,12 +90,16 @@ class UIController(
                     super.onPageScrolled(position, positionOffset, positionOffsetPixels)
                 }
 
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                }
             })
         }
-        List(20) {
+
+        List(10) {
             textItem {
-                id("item_2_$it")
-                title("Hello item $it")
+                id("text_Item_$it")
+                title("Hello $it")
             }
         }
     }

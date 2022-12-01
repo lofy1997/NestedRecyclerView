@@ -35,15 +35,14 @@ class CustomViewPager @JvmOverloads constructor(
         fragmentActivity: FragmentActivity,
         onPageChangeListener: ViewPager2.OnPageChangeCallback
     ) {
+        println("binding ${selectionPosition}")
         if (localFragment != fragments) {
             localFragment.addAll(fragments)
+            setUp(fragmentActivity)
         }
         if (selectionPosition != binding.viewPager2.currentItem) {
             binding.viewPager2.setCurrentItem(selectionPosition, true)
         }
-        setUp(fragmentActivity)
-        binding.viewPager2.isUserInputEnabled = false
-        binding.viewPager2.isSaveEnabled = false
     }
 
     private fun setUp(fragmentActivity: FragmentActivity) {

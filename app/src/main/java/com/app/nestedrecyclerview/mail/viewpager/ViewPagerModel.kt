@@ -29,7 +29,7 @@ abstract class ViewPagerModel : EpoxyModel<CustomViewPager>() {
     }
 
     override fun shouldSaveViewState(): Boolean {
-        return true
+        return false
     }
 
     override fun bind(view: CustomViewPager) {

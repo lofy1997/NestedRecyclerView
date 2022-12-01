@@ -7,12 +7,20 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.airbnb.epoxy.stickyheader.StickyHeaderLinearLayoutManager
 import com.app.nestedrecyclerview.databinding.FragmentMailBinding
-import com.app.nestedrecyclerview.mail.UIController
+import com.app.nestedrecyclerview.mail.viewpager.WLPagerFragment
+import com.app.nestedrecyclerview.mail.viewpager.WLViewPagerAdapter
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 class MailFragment : Fragment() {
 
     private val uiController: UIController by lazy {
-        UIController(fragmentActivity = requireActivity())
+        UIController(
+            fragmentActivity = requireActivity(),
+            onTabSelectedListener = {
+
+            }
+        )
     }
     private var _binding: FragmentMailBinding? = null
     private val binding get() = _binding!!
@@ -40,7 +48,7 @@ class MailFragment : Fragment() {
         binding.recyclerView.layoutManager = StickyHeaderLinearLayoutManager(requireContext())
         binding.recyclerView.setController(uiController)
         binding.recyclerView.requestModelBuild()
-        uiController.updateSelectedTab(1)
+        uiController.updateSelectedTab(0)
     }
 
     companion object {
